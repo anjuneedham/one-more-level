@@ -31,7 +31,22 @@ jobs:
           distribution: temurin
           java-version: '21'
 
-      - uses: android-actions/setup-android@v3
+      # ubuntu-latest already ships a full Android SDK (that's where
+      # ANDROID_HOME points below). The android-actions/setup-android
+      # marketplace action additionally tries to install a legacy "tools"
+      # package that Google removed from its repository years ago, which
+      # makes it fail outright - so instead we just ask the SDK that's
+      # already there for exactly what this project needs.
+      - name: Install the Android SDK components this project needs
+        run: |
+          SDKMANAGER=$(find "${ANDROID_HOME:-/usr/local/lib/android/sdk}" -maxdepth 4 -type f -name sdkmanager | sort -V | tail -1)
+          if [ -z "$SDKMANAGER" ]; then
+            echo "::error::No sdkmanager found under ANDROID_HOME ($ANDROID_HOME)"
+            exit 1
+          fi
+          echo "Using $SDKMANAGER"
+          yes | "$SDKMANAGER" --licenses > /dev/null || true
+          "$SDKMANAGER" "platform-tools" "platforms;android-34" "build-tools;34.0.0"
 
       - name: Restore the signing key from secrets
         run: echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > android/release.keystore
