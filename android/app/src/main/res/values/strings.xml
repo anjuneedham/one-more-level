@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">One More Level</string>
+    <string name="title_activity_main">One More Level</string>
+    <string name="package_name">com.onemorelevel.game</string>
+    <string name="custom_url_scheme">com.onemorelevel.game</string>
+</resources>

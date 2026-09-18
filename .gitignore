@@ -1,0 +1,24 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+
+# Android build output (the native project itself IS committed).
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/capacitor-cordova-android-plugins/build/
+android/app/src/main/assets/public/
+android/app/src/main/assets/capacitor.config.json
+android/app/src/main/assets/capacitor.plugins.json
+ios/
+
+# Never commit signing material or production ad/analytics credentials.
+*.keystore
+*.jks
+android/keystore.properties
+android/app/google-services.json
+.env
+.env.local
+.env.production
