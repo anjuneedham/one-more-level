@@ -37,13 +37,14 @@
         </provider>
 
         <!--
-            AdMob: uncomment and set the app id through a build variable when the
-            native ad plugin is added. Never commit a production app id.
-
-            <meta-data
-                android:name="com.google.android.gms.ads.APPLICATION_ID"
-                android:value="${admobAppId}" />
+            The real App ID never appears here in source - it's injected at
+            build time from the ADMOB_APP_ID env var via manifestPlaceholders
+            in app/build.gradle. Falls back to Google's public test App ID
+            when that env var isn't set (local/dev builds).
         -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="${admobAppId}" />
     </application>
 
     <!-- Permissions -->
@@ -52,8 +53,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- Haptic feedback. -->
     <uses-permission android:name="android.permission.VIBRATE" />
-    <!-- Required by AdMob on Android 13+ once ads are enabled. -->
-    <!-- <uses-permission android:name="com.google.android.gms.permission.AD_ID" /> -->
+    <!-- Required by AdMob on Android 13+. -->
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
 
     <uses-feature android:name="android.hardware.touchscreen" android:required="true" />
 </manifest>

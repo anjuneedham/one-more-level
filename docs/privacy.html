@@ -27,9 +27,10 @@
       <h2>The short version</h2>
       <div class="card">
         <p>
-          <strong>The app does not collect, transmit or share any personal data.</strong> There is
-          no account, no sign-in and no server. Everything the app remembers stays on your device
-          and never leaves it.
+          <strong>There is no account, no sign-in and no server.</strong> The app itself doesn't
+          collect anything about you. The one exception is the ads shown between runs and on the
+          rewarded "continue" button, which are served by Google AdMob - see
+          <a href="#advertising">Advertising</a> below for exactly what that involves.
         </p>
       </div>
 
@@ -51,32 +52,59 @@
         copy, which also means a deleted best score cannot be restored.
       </p>
 
-      <h2>What the app does not do</h2>
+      <h2 id="advertising">Advertising</h2>
+      <p>
+        The app shows ads through <strong>Google AdMob</strong>: a short video ad between some runs,
+        and an optional rewarded video you can choose to watch to continue a run after losing your
+        last life. Watching a rewarded ad is always your choice - nothing requires it.
+      </p>
+      <p>
+        To serve and measure these ads, AdMob's SDK can access your device's
+        <strong>advertising ID</strong> and other device and app information (such as your general
+        approximate location from your IP address, and technical details like device model and OS
+        version), and sends this to Google. This app doesn't see or store that data itself - it
+        flows directly between your device and Google. Google's own use of it is governed by
+        <a href="https://policies.google.com/technologies/ads" rel="noopener">Google's Ads
+        Privacy &amp; Terms</a>, not by this app.
+      </p>
+      <p>
+        You can reset or delete your advertising ID, and generally limit ad personalisation, in
+        your device's own settings (on Android: <strong>Settings &rarr; Privacy &rarr; Ads</strong>,
+        wording varies by device and OS version).
+      </p>
+
+      <h2>What the app itself does not do</h2>
       <ul>
         <li>It does not ask for or collect your name, email address, phone number or location.</li>
         <li>It does not read your contacts, photos, files, microphone or camera.</li>
-        <li>It does not use cookies or web tracking technologies.</li>
-        <li>It does not show advertising.</li>
+        <li>It does not require an account or sign-in.</li>
         <li>It does not contain analytics or crash-reporting services.</li>
-        <li>It does not sell or share any information with anyone, because it has none to share.</li>
+        <li>Aside from what AdMob does on its own behalf (above), it does not sell or share any
+          information with anyone.</li>
       </ul>
 
       <h2>Permissions</h2>
-      <p>The app requests two Android permissions, and only these two:</p>
+      <p>The app requests these Android permissions, and only these:</p>
       <ul>
         <li>
-          <strong>Internet.</strong> Requested so that optional features can be enabled in a future
-          version without a new permission prompt. The current version plays entirely offline and
-          makes no network requests.
+          <strong>Internet.</strong> Needed to load ads and to let optional future features work.
+          Without a network connection the game still plays fully offline; you'll just see "Ad
+          unavailable" instead of an ad.
         </li>
         <li><strong>Vibrate.</strong> Used for haptic feedback, which you can turn off in Settings.</li>
+        <li>
+          <strong>Advertising ID</strong> (Android 13+). Required by the Google Mobile Ads SDK to
+          serve and measure ads, as described above.
+        </li>
       </ul>
 
       <h2>Children</h2>
       <p>
-        The app is suitable for a general audience and does not knowingly collect information from
-        anyone, including children under 13. Since no information is collected at all, there is
-        nothing to request the deletion of.
+        The app is suitable for a general audience. It does not knowingly collect information from
+        children under 13 itself; if the app is used by a child, ads are requested with
+        non-personalised settings appropriate for that context, consistent with Google's
+        <a href="https://support.google.com/admob/answer/6223431" rel="noopener">AdMob policies for
+        child-directed treatment</a>.
       </p>
 
       <h2>Google Play</h2>
@@ -90,10 +118,10 @@
 
       <h2>Changes to this policy</h2>
       <p>
-        If a future version of the app adds advertising, analytics or any other feature that
-        handles data, this policy will be updated <em>before</em> that version is released, the
-        "last updated" date above will change, and the app's Google Play Data safety information
-        will be updated to match.
+        If a future version of the app adds analytics, a new ad format, or any other feature that
+        changes what data is handled, this policy will be updated <em>before</em> that version is
+        released, the "last updated" date above will change, and the app's Google Play Data safety
+        information will be updated to match.
       </p>
 
       <h2>Contact</h2>

@@ -56,22 +56,37 @@ placeholders; generate branded ones with:
 npx @capacitor/assets generate --android
 ```
 
-## Ads (AdMob)
+## Ads (AdMob) — live
 
-Ad logic is already abstracted behind `AdService` (`src/services/ads.ts`), so
-enabling real ads does not touch game code:
+`@capacitor-community/admob` is installed and wired into `AdMobAdService`
+(`src/services/ads.ts`), which talks to the plugin's real API directly (not a
+generic bridge guess). The manifest's App ID meta-data
+(`android/app/src/main/AndroidManifest.xml`) comes from `manifestPlaceholders`
+in `android/app/build.gradle`, which reads the `ADMOB_APP_ID` env var — never
+a literal in either file.
 
-1. `npm i @capacitor-community/admob` and `npx cap sync android`.
-2. Uncomment the `com.google.android.gms.ads.APPLICATION_ID` meta-data and the
-   `AD_ID` permission in `android/app/src/main/AndroidManifest.xml`, supplying
-   the app id through a Gradle variable — not a literal in the manifest.
-3. Put the real unit IDs in `.env.production` (see `.env.example`). Builds
-   without all three values keep using the mock provider and Google's public
-   test units, so a stray production build can never serve live ads by accident.
+Three secrets drive it, same pattern as the signing key
+(**Settings → Secrets and variables → Actions**):
+
+| Secret | Used by |
+| --- | --- |
+| `ADMOB_APP_ID` | `VITE_ADMOB_APP_ID` (web build) **and** `ADMOB_APP_ID` (Gradle manifest placeholder) |
+| `ADMOB_REWARDED_ID` | `VITE_ADMOB_REWARDED_ID` |
+| `ADMOB_INTERSTITIAL_ID` | `VITE_ADMOB_INTERSTITIAL_ID` |
+
+Builds missing any of the three env vars fall back to the mock provider and
+Google's public test units (`src/services/config.ts`), so a build can never
+serve live ads by accident.
 
 Placement policy, enforced in `AdManager`: rewarded ads only on an explicit
 player tap ("watch ad to continue"), interstitials only between runs, at most
 one every 3 runs and never within 2 minutes of the last one.
+
+**Don't repeatedly tap your own live ads.** Once real ad unit IDs are set,
+`testMode` is `false` and the build requests real ads — normal for verifying
+they show up, but repeated self-clicks for "revenue" is invalid traffic and
+against AdMob policy. Use `AdMobInitializationOptions.testingDevices` (in
+`AdMobAdService.initialize`) if you want to hammer on it safely during QA.
 
 ## Analytics (Firebase, optional)
 
@@ -96,9 +111,10 @@ Enable it once in the repository: **Settings -> Pages -> Source: Deploy from a
 branch -> `main` / `/docs`**. The same URLs are in `LINKS`
 (`src/services/config.ts`) and are opened by the in-app settings screen.
 
-The policy describes the app as it ships today: no ads, no analytics, nothing
-collected. **If you enable AdMob or Firebase, update `docs/privacy.html` and
-the Play Data safety form before releasing that build** - the two must agree.
+The policy describes the app as it ships today, including the AdMob section.
+**If you enable Firebase Analytics too, update `docs/privacy.html` and the
+Play Data safety form again before releasing that build** - the two must
+always agree.
 
 ## Pre-launch checklist
 

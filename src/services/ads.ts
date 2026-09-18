@@ -1,3 +1,5 @@
+import { AdMob, RewardAdPluginEvents } from '@capacitor-community/admob';
+import type { PluginListenerHandle } from '@capacitor/core';
 import { Analytics } from './analytics';
 import { BALANCE, CONFIG } from './config';
 
@@ -55,48 +57,31 @@ export class MockAdService implements AdService {
   }
 }
 
-interface AdMobBridge {
-  initialize(options: { initializeForTesting: boolean }): Promise<void>;
-  prepareRewardVideoAd(options: Record<string, unknown>): Promise<void>;
-  showRewardVideoAd(): Promise<{ type?: string }>;
-  prepareInterstitial(options: Record<string, unknown>): Promise<void>;
-  showInterstitial(): Promise<void>;
-}
-
 /**
- * Adapter for a native AdMob plugin (e.g. @capacitor-community/admob), resolved
- * from the Capacitor bridge at runtime so the web build stays dependency-free.
- * Ad IDs come from CONFIG, which reads them from build-time env vars.
+ * Adapter for the real @capacitor-community/admob plugin. Ad IDs come from
+ * CONFIG, which reads them from build-time env vars, so no credentials are
+ * hard-coded in source. On the web build this plugin's own web
+ * implementation is an inert no-op, so it's safe to import unconditionally.
  */
 export class AdMobAdService implements AdService {
   readonly name = 'admob';
-  private bridge: AdMobBridge | null = null;
+  private initialized = false;
   private rewardedReady = false;
 
-  private resolveBridge(): AdMobBridge | null {
-    if (this.bridge) return this.bridge;
-    const cap = (window as unknown as { Capacitor?: { Plugins?: Record<string, unknown> } })
-      .Capacitor;
-    this.bridge = (cap?.Plugins?.['AdMob'] as AdMobBridge | undefined) ?? null;
-    return this.bridge;
-  }
-
   async initialize(): Promise<void> {
-    const bridge = this.resolveBridge();
-    if (!bridge) return;
     try {
-      await bridge.initialize({ initializeForTesting: CONFIG.ads.testMode });
+      await AdMob.initialize({ initializeForTesting: CONFIG.ads.testMode });
+      this.initialized = true;
       await this.preloadRewarded();
     } catch {
-      this.rewardedReady = false;
+      this.initialized = false;
     }
   }
 
   private async preloadRewarded(): Promise<void> {
-    const bridge = this.resolveBridge();
-    if (!bridge) return;
+    if (!this.initialized) return;
     try {
-      await bridge.prepareRewardVideoAd({
+      await AdMob.prepareRewardVideoAd({
         adId: CONFIG.ads.rewardedUnitId,
         isTesting: CONFIG.ads.testMode,
       });
@@ -111,31 +96,49 @@ export class AdMobAdService implements AdService {
   }
 
   async showRewarded(): Promise<RewardedResult> {
-    const bridge = this.resolveBridge();
-    if (!bridge) return { status: 'unavailable', message: 'Ad unavailable' };
-    try {
-      if (!this.rewardedReady) await this.preloadRewarded();
-      const result = await bridge.showRewardVideoAd();
-      void this.preloadRewarded(); // warm the next one up in the background
-      this.rewardedReady = false;
-      return result && result.type !== 'dismissed'
-        ? { status: 'rewarded' }
-        : { status: 'dismissed' };
-    } catch {
-      this.rewardedReady = false;
-      return { status: 'unavailable', message: 'Ad unavailable' };
-    }
+    if (!this.initialized) return { status: 'unavailable', message: 'Ad unavailable' };
+    if (!this.rewardedReady) await this.preloadRewarded();
+    if (!this.rewardedReady) return { status: 'unavailable', message: 'Ad unavailable' };
+
+    // The plugin's own showRewardVideoAd() promise isn't a reliable signal
+    // for "closed without reward" across platforms, so listen for the
+    // actual events instead - first one to fire wins.
+    return new Promise<RewardedResult>((resolve) => {
+      let settled = false;
+      const handles: PluginListenerHandle[] = [];
+      const finish = (result: RewardedResult): void => {
+        if (settled) return;
+        settled = true;
+        handles.forEach((h) => void h.remove());
+        this.rewardedReady = false;
+        void this.preloadRewarded(); // warm the next one up in the background
+        resolve(result);
+      };
+
+      void AdMob.addListener(RewardAdPluginEvents.Rewarded, () => finish({ status: 'rewarded' })).then(
+        (h) => handles.push(h),
+      );
+      void AdMob.addListener(RewardAdPluginEvents.Dismissed, () => finish({ status: 'dismissed' })).then(
+        (h) => handles.push(h),
+      );
+      void AdMob.addListener(RewardAdPluginEvents.FailedToShow, () =>
+        finish({ status: 'unavailable', message: 'Ad unavailable' }),
+      ).then((h) => handles.push(h));
+
+      AdMob.showRewardVideoAd().catch(() =>
+        finish({ status: 'unavailable', message: 'Ad unavailable' }),
+      );
+    });
   }
 
   async showInterstitial(): Promise<boolean> {
-    const bridge = this.resolveBridge();
-    if (!bridge) return false;
+    if (!this.initialized) return false;
     try {
-      await bridge.prepareInterstitial({
+      await AdMob.prepareInterstitial({
         adId: CONFIG.ads.interstitialUnitId,
         isTesting: CONFIG.ads.testMode,
       });
-      await bridge.showInterstitial();
+      await AdMob.showInterstitial();
       return true;
     } catch {
       return false;

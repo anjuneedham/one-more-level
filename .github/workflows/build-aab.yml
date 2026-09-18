@@ -2,7 +2,9 @@ name: 2. Build signed Android App Bundle
 
 # Run this whenever you want a fresh .aab to upload to Google Play. Requires
 # the four ANDROID_* secrets described in "1. Generate release keystore" to
-# already be set (Settings -> Secrets and variables -> Actions).
+# already be set (Settings -> Secrets and variables -> Actions). The three
+# ADMOB_* secrets are optional - without them the build uses Google's public
+# test ad units instead of real ones (see src/services/config.ts).
 on:
   workflow_dispatch:
 
@@ -21,6 +23,10 @@ jobs:
         run: npm ci
 
       - name: Build the web app
+        env:
+          VITE_ADMOB_APP_ID: ${{ secrets.ADMOB_APP_ID }}
+          VITE_ADMOB_REWARDED_ID: ${{ secrets.ADMOB_REWARDED_ID }}
+          VITE_ADMOB_INTERSTITIAL_ID: ${{ secrets.ADMOB_INTERSTITIAL_ID }}
         run: npm run build
 
       - name: Copy the web build into the Android project
@@ -62,6 +68,8 @@ jobs:
 
       - name: Build the release bundle
         working-directory: android
+        env:
+          ADMOB_APP_ID: ${{ secrets.ADMOB_APP_ID }}
         run: ./gradlew bundleRelease --no-daemon
 
       - name: Clean up the signing key from the runner
