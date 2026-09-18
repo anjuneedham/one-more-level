@@ -80,13 +80,36 @@ Analytics Capacitor plugin. `AnalyticsService` picks the native bridge up at
 runtime; if it is missing, events are dropped silently and the game is
 unaffected.
 
+## Public pages (required by Play)
+
+Google Play needs a reachable privacy policy URL before **any** release,
+closed testing included. The pages are in `docs/` and are served by GitHub
+Pages straight from `main`:
+
+| Page | URL |
+| --- | --- |
+| Landing | `https://anjuneedham.github.io/one-more-level/` |
+| Privacy policy | `https://anjuneedham.github.io/one-more-level/privacy.html` |
+| Terms | `https://anjuneedham.github.io/one-more-level/terms.html` |
+
+Enable it once in the repository: **Settings -> Pages -> Source: Deploy from a
+branch -> `main` / `/docs`**. The same URLs are in `LINKS`
+(`src/services/config.ts`) and are opened by the in-app settings screen.
+
+The policy describes the app as it ships today: no ads, no analytics, nothing
+collected. **If you enable AdMob or Firebase, update `docs/privacy.html` and
+the Play Data safety form before releasing that build** - the two must agree.
+
 ## Pre-launch checklist
 
 - [ ] `npm run build` clean, `npx cap sync android` run
 - [ ] Version code/name bumped
 - [ ] Release keystore configured, AAB signed
 - [ ] Data safety form: local storage only; ads/analytics declared if enabled
-- [ ] Privacy policy and terms hosted, URLs replacing the placeholders in
-      `src/ui/screens.ts`
+- [ ] GitHub Pages enabled (Settings -> Pages -> Deploy from branch `main`,
+      folder `/docs`) so the privacy and terms pages are live
+- [ ] Contact email filled in on the three pages in `docs/` (search for
+      `REPLACE-WITH-YOUR-CONTACT-EMAIL`)
+- [ ] Privacy policy URL entered in Play Console -> App content
 - [ ] Tested on a low-end device (60 FPS target) and with airplane mode on
 - [ ] Store listing art produced from `resources/` (no third-party assets)

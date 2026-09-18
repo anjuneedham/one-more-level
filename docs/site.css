@@ -1,0 +1,150 @@
+/* Shared styling for the One More Level public pages (GitHub Pages). */
+:root {
+  --bg: #0b0e1a;
+  --bg-soft: #141a2e;
+  --surface: #1b2240;
+  --ink: #f2f5ff;
+  --ink-dim: #8e97bd;
+  --primary: #5b7bff;
+  --accent: #ffd166;
+  --violet: #b06bff;
+  --font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0 20px 80px;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.wrap {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+header.site {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 28px 0 8px;
+}
+
+.mark {
+  width: 48px;
+  height: 48px;
+  flex: none;
+  border-radius: 14px;
+  background: linear-gradient(145deg, var(--primary), var(--violet));
+  position: relative;
+}
+
+.mark::before,
+.mark::after {
+  content: '';
+  position: absolute;
+  border-radius: 4px;
+  background: #f2f5ff;
+}
+
+.mark::before {
+  inset: 30% 22% 48% 22%;
+}
+
+.mark::after {
+  inset: 58% 22% 22% 22%;
+  background: var(--accent);
+}
+
+.mark-name {
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  font-size: 18px;
+}
+
+.mark-name a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1 {
+  font-size: clamp(30px, 6vw, 42px);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 24px 0 6px;
+}
+
+h2 {
+  font-size: 20px;
+  font-weight: 800;
+  margin: 34px 0 8px;
+}
+
+.updated {
+  color: var(--ink-dim);
+  font-size: 14px;
+  margin: 0 0 8px;
+}
+
+p,
+li {
+  color: #dfe4ff;
+}
+
+ul {
+  padding-left: 22px;
+}
+
+li {
+  margin: 6px 0;
+}
+
+a {
+  color: var(--primary);
+}
+
+strong {
+  color: var(--ink);
+}
+
+.card {
+  background: var(--surface);
+  border-radius: 18px;
+  padding: 18px 22px;
+  margin: 22px 0;
+}
+
+.card--note {
+  background: var(--bg-soft);
+  border: 1px solid rgba(91, 123, 255, 0.25);
+}
+
+.placeholder {
+  background: rgba(255, 209, 102, 0.18);
+  color: var(--accent);
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+footer.site {
+  margin-top: 54px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--ink-dim);
+  font-size: 14px;
+}
+
+footer.site a {
+  color: var(--ink-dim);
+  margin-right: 16px;
+}

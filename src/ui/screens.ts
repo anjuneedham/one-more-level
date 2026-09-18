@@ -2,7 +2,7 @@ import type { RunSummary } from '../game/session';
 import { Analytics } from '../services/analytics';
 import { Ads } from '../services/ads';
 import { Audio } from '../services/audio';
-import { CONFIG } from '../services/config';
+import { CONFIG, LINKS } from '../services/config';
 import { Haptics } from '../services/haptics';
 import { Save } from '../services/storage';
 import { button, formatNumber, h, replayAnimation } from './dom';
@@ -59,7 +59,7 @@ export class HomeScreen {
   }
 }
 
-/** Sound, haptics and the legal placeholders. No accounts, no tracking wall. */
+/** Sound, haptics and the hosted legal pages. No accounts, no tracking wall. */
 export class SettingsScreen {
   readonly root: HTMLElement;
 
@@ -129,12 +129,11 @@ export class SettingsScreen {
     ]);
     el.addEventListener('click', () => {
       Audio.play('click');
-      // Placeholder copy until the hosted policy pages exist.
-      window.alert(
-        kind === 'privacy'
-          ? 'Privacy Policy\n\nOne More Level stores your best level, best score, coins and settings on this device only. No account is required and no personal data leaves the device except anonymous analytics and ad requests when you are online.'
-          : 'Terms of Service\n\nOne More Level is provided as-is for entertainment. Play fair, be kind, and remember: just one more level.',
-      );
+      // Opens the hosted page in the system browser (Capacitor) or a new tab.
+      const opened = window.open(LINKS[kind], '_blank', 'noopener');
+      // Pop-up blocked, or offline with no browser to hand: say so, never
+      // leave the row looking broken.
+      if (!opened) window.alert(`${label}\n\n${LINKS[kind]}`);
     });
     return el;
   }

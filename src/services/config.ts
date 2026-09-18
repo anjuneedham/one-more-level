@@ -64,6 +64,16 @@ export const CONFIG: AppConfig = {
   debug: !isProduction,
 };
 
+/**
+ * Public pages linked from the settings screen. They are served by GitHub
+ * Pages from the repository's `docs/` folder; Google Play also needs the
+ * privacy URL in App content -> Privacy policy.
+ */
+export const LINKS = {
+  privacy: 'https://anjuneedham.github.io/one-more-level/privacy.html',
+  terms: 'https://anjuneedham.github.io/one-more-level/terms.html',
+} as const;
+
 /** Tunables the designers are most likely to touch. */
 export const BALANCE = {
   startingLives: 3,
