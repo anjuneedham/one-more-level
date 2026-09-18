@@ -7,7 +7,7 @@ release build configured for a signed, minified AAB.
 | | |
 | --- | --- |
 | App name | One More Level |
-| Application ID | `com.onemorelevel.game` |
+| Application ID | `com.onemorelevel.myapp` |
 | Min SDK | 22 (Android 5.1) |
 | Target SDK | 34 |
 | Orientation | Portrait only |

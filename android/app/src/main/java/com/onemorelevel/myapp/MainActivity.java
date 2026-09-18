@@ -1,4 +1,4 @@
-package com.onemorelevel.game;
+package com.onemorelevel.myapp;
 
 import com.getcapacitor.BridgeActivity;
 

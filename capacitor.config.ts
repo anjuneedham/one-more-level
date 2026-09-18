@@ -1,7 +1,7 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.onemorelevel.game',
+  appId: 'com.onemorelevel.myapp',
   appName: 'One More Level',
   webDir: 'dist',
   android: {
