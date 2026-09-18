@@ -127,15 +127,6 @@ strong {
   border: 1px solid rgba(91, 123, 255, 0.25);
 }
 
-.placeholder {
-  background: rgba(255, 209, 102, 0.18);
-  color: var(--accent);
-  padding: 2px 8px;
-  border-radius: 6px;
-  font-weight: 700;
-  white-space: nowrap;
-}
-
 footer.site {
   margin-top: 54px;
   padding-top: 20px;

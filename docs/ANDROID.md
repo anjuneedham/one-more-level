@@ -108,8 +108,6 @@ the Play Data safety form before releasing that build** - the two must agree.
 - [ ] Data safety form: local storage only; ads/analytics declared if enabled
 - [ ] GitHub Pages enabled (Settings -> Pages -> Deploy from branch `main`,
       folder `/docs`) so the privacy and terms pages are live
-- [ ] Contact email filled in on the three pages in `docs/` (search for
-      `REPLACE-WITH-YOUR-CONTACT-EMAIL`)
 - [ ] Privacy policy URL entered in Play Console -> App content
 - [ ] Tested on a low-end device (60 FPS target) and with airplane mode on
 - [ ] Store listing art produced from `resources/` (no third-party assets)
