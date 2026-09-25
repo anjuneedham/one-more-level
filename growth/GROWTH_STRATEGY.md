@@ -10,8 +10,9 @@
 
 1. **Paid validation ($15, 3 days, Facebook + Instagram, one campaign, five creatives).** See `FACEBOOK_ADS.md`. The goal is a directional read on CPI and CTR across 5 hook concepts, not a statistically airtight result — $15 cannot produce that, and this plan does not pretend otherwise.
 2. **Organic content engine runs in parallel, not after.** TikTok/Reels/Shorts cost nothing but time, and gameplay clips double as raw material for the next round of paid creative. See `CONTENT_ENGINE.md`.
-3. **Only scale paid spend when retention + revenue data supports it**, not on CPI alone. A campaign that produces $0.20 installs that all uninstall in one session is a worse outcome than $1.00 installs that stick. See `FACEBOOK_ADS.md` Phase 2–4 gating criteria.
-4. **Analytics comes before scale, not after.** The single highest-priority infrastructure gap (see `INITIAL_AUDIT.md`) is that no install- or session-level data is currently captured anywhere. Budget should not scale past Phase 1 until this is resolved — see `LAUNCH_CHECKLIST.md`.
+3. **Google Ads App Campaigns come next, not simultaneously with step 1.** See `GOOGLE_ADS.md`. This channel needs far fewer creative assets than Facebook (a few text lines and reused screenshots/clips) but needs more daily budget (~$10/day minimum) to generate signal, and it's the only paid channel that places ads directly inside the Play Store's own search/browse surfaces. Running it after Facebook means its minimal text assets can reuse whichever hook already showed signal, instead of guessing blind on two channels at once.
+4. **Only scale paid spend on either channel when retention + revenue data supports it**, not on CPI alone. A campaign that produces $0.20 installs that all uninstall in one session is a worse outcome than $1.00 installs that stick. See `FACEBOOK_ADS.md` Phase 2–4 and `GOOGLE_ADS.md` G2–G3 gating criteria.
+5. **Analytics comes before scale, not after.** The single highest-priority infrastructure gap (see `INITIAL_AUDIT.md`) is that no install- or session-level data is currently captured anywhere. Budget should not scale past Phase 1 (Facebook) or G1 (Google) until this is resolved — see `LAUNCH_CHECKLIST.md`.
 
 ## Why this order
 

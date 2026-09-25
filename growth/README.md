@@ -7,17 +7,18 @@ Start here, in this order:
 1. **[INITIAL_AUDIT.md](./INITIAL_AUDIT.md)** — what the game actually is, what's already built, what's missing. Read this first; everything else builds on it.
 2. **[GROWTH_STRATEGY.md](./GROWTH_STRATEGY.md)** — the overall approach: paid test → organic content engine → phased scale, and why.
 3. **[FACEBOOK_ADS.md](./FACEBOOK_ADS.md)** — the $15 validation test and the phased budget plan after it.
-4. **[CREATIVE_LIBRARY.md](./CREATIVE_LIBRARY.md)** — the 5 initial ad concepts, fully scripted (15s/20s/30s cuts, copy, CTAs).
-5. **[CAMPAIGN_TRACKER.md](./CAMPAIGN_TRACKER.md)** — how every creative gets tracked, and the KEEP / ITERATE / PAUSE / RETEST decision framework.
-6. **[CONTENT_ENGINE.md](./CONTENT_ENGINE.md)** — 30+ organic short-form concepts for TikTok / Reels / Shorts.
-7. **[ANALYTICS_SPEC.md](./ANALYTICS_SPEC.md)** — the event taxonomy the game should eventually report (no SDK installed without approval — see the doc).
-8. **[RETENTION.md](./RETENTION.md)** — D0–D30 tracking and how to interpret it.
-9. **[MONETIZATION.md](./MONETIZATION.md)** — the revenue calculator and ad-placement experiment backlog.
-10. **[CREATIVE_PROMPTS.md](./CREATIVE_PROMPTS.md)** — ready-to-use prompts for producing every ad/creative asset type.
-11. **[EXPERIMENTS.md](./EXPERIMENTS.md)** — the full experiment backlog (25+), each with a hypothesis and a decision log.
-12. **[KPI_DASHBOARD.md](./KPI_DASHBOARD.md)** — the single human-readable snapshot of acquisition, engagement, retention, monetization, growth.
-13. **[LAUNCH_CHECKLIST.md](./LAUNCH_CHECKLIST.md)** — what must be true before spending real paid budget.
-14. **[weekly-review.md](./weekly-review.md)** — the repeatable weekly workflow. Copy its template into a dated entry each week.
+4. **[GOOGLE_ADS.md](./GOOGLE_ADS.md)** — Google Ads App Campaigns (reaches the Play Store's own search/browse surfaces directly, needs far fewer creative assets than Facebook — run after the Facebook test).
+5. **[CREATIVE_LIBRARY.md](./CREATIVE_LIBRARY.md)** — the 5 initial ad concepts, fully scripted (15s/20s/30s cuts, copy, CTAs).
+6. **[CAMPAIGN_TRACKER.md](./CAMPAIGN_TRACKER.md)** — how every creative gets tracked, and the KEEP / ITERATE / PAUSE / RETEST decision framework.
+7. **[CONTENT_ENGINE.md](./CONTENT_ENGINE.md)** — 30+ organic short-form concepts for TikTok / Reels / Shorts.
+8. **[ANALYTICS_SPEC.md](./ANALYTICS_SPEC.md)** — the event taxonomy the game should eventually report (no SDK installed without approval — see the doc).
+9. **[RETENTION.md](./RETENTION.md)** — D0–D30 tracking and how to interpret it.
+10. **[MONETIZATION.md](./MONETIZATION.md)** — the revenue calculator and ad-placement experiment backlog.
+11. **[CREATIVE_PROMPTS.md](./CREATIVE_PROMPTS.md)** — ready-to-use prompts for producing every ad/creative asset type.
+12. **[EXPERIMENTS.md](./EXPERIMENTS.md)** — the full experiment backlog (25+), each with a hypothesis and a decision log.
+13. **[KPI_DASHBOARD.md](./KPI_DASHBOARD.md)** — the single human-readable snapshot of acquisition, engagement, retention, monetization, growth.
+14. **[LAUNCH_CHECKLIST.md](./LAUNCH_CHECKLIST.md)** — what must be true before spending real paid budget.
+15. **[weekly-review.md](./weekly-review.md)** — the repeatable weekly workflow. Copy its template into a dated entry each week.
 
 ## Directory structure
 
@@ -34,6 +35,7 @@ growth/
   MONETIZATION.md
   CONTENT_ENGINE.md
   FACEBOOK_ADS.md
+  GOOGLE_ADS.md
   ANALYTICS_SPEC.md
   CREATIVE_PROMPTS.md
   LAUNCH_CHECKLIST.md

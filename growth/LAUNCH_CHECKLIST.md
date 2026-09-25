@@ -14,7 +14,13 @@ What must be true before spending real paid budget, and before scaling past it. 
 
 **Phase 1 ($15 test) can reasonably launch once the Play Store listing is actually live and the 5 creatives are produced — the ad spend itself doesn't need analytics wired yet, since its only job is a directional CPI/CTR read.**
 
-## Before Phase 2+ (any budget increase past the initial $15)
+## Before launching Google Ads App Campaigns (G1)
+
+- [ ] Facebook Phase 1 has produced at least one KEEP hook/creative (`GOOGLE_ADS.md` explains why this ordering matters — Google's text assets should reuse validated messaging, not guess blind).
+- [ ] Text assets (headlines/descriptions), at least 3 images, and at least 1 video are ready — see the minimal asset list in `GOOGLE_ADS.md` (mostly reuses existing store assets and Facebook video).
+- [ ] Budget of at least ~$10/day for 7 days is available — Google's App Campaigns need more daily signal than Facebook to exit the learning phase; the Facebook $5/day structure does not translate here.
+
+## Before Phase 2+ (any budget increase past the initial $15 on Facebook, or past G1 on Google)
 
 - [ ] **Install attribution exists** (which creative/campaign produced which install) — currently **missing entirely**. This is the single highest-priority blocker; see `EXPERIMENTS.md` E25 and `ANALYTICS_SPEC.md`. Without this, `CAMPAIGN_TRACKER.md`'s per-creative retention/revenue fields cannot ever be filled in, and Phase 2+ gating in `FACEBOOK_ADS.md` cannot be honestly evaluated.
 - [ ] **An analytics provider is approved and wired** (see `ANALYTICS_SPEC.md`) — the event taxonomy and call sites already exist in code (`src/services/analytics.ts`); this requires a developer decision on provider, not new instrumentation work.
