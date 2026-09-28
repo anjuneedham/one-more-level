@@ -18,6 +18,8 @@ Run the game locally (`npm run dev`, or open the published playable build) and s
 
 Full checklist: `creatives/scripts/shot-lists.md`.
 
+Or skip manual recording entirely: [`creatives/video-pipeline/`](creatives/video-pipeline/README.md) plays the real build with an automated player, records it frame-perfect, and cuts a finished 30s ad with captions and audio.
+
 ## Facebook video ads
 
 > "Using [captured clip: clean level clear, mid-difficulty], cut to a 15-second vertical video ad. Open on a freeze-frame of the timer at 3 seconds with bold on-screen text '[hook from CREATIVE_LIBRARY.md]'. Cut to real-time uncut gameplay of the clear. Close on the in-game 'COMPLETE' result card with score/coins visible, then a 2-second end card: app icon, headline '[headline]', button '[CTA]'. Use brand colors #5B7BFF (primary blue), #B06BFF (violet), #FFD166 (gold accent), #0B0E1A (background), #F2F5FF (text) for all overlay graphics. No stock footage, no synthetic gameplay — source footage only."

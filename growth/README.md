@@ -47,6 +47,7 @@ growth/
     captions/   <- platform captions per creative
     winners/    <- creatives that hit KEEP after real data
     losers/     <- creatives that hit PAUSE, with the reason, so mistakes aren't repeated
+    video-pipeline/ <- records real gameplay and cuts finished vertical ads (see its README)
   data/
     campaign-data.csv    <- one row per ad campaign/ad set
     creative-data.csv    <- one row per creative variant, matches CAMPAIGN_TRACKER.md fields
