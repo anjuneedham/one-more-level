@@ -1,0 +1,227 @@
+{
+ "v1_hook": {
+  "html": "<span>HOW I LOST ON</span><span class='g'>LEVEL 2.</span>",
+  "cls": "big"
+ },
+ "v1_l1": {
+  "html": "<span>LIFE 1: <span class='r'>WRONG COLOUR.</span></span>",
+  "cls": "red"
+ },
+ "v1_ok": {
+  "html": "<span>OK. FOCUS.</span>"
+ },
+ "v1_l2": {
+  "html": "<span>LIFE 2: <span class='r'>A RED ORB.</span></span>",
+  "cls": "red"
+ },
+ "v1_l3": {
+  "html": "<span>LIFE 3: <span class='r'>3 − 3.</span></span>",
+  "cls": "red"
+ },
+ "v1_end": {
+  "html": "<span>NEW BEST: <span class='g'>LEVEL 2.</span></span>"
+ },
+ "v2_hook": {
+  "html": "<span>BET YOU CAN'T</span><span>CLEAR <span class='g'>4 IN A ROW.</span></span>",
+  "cls": "big"
+ },
+ "v2_n1": {
+  "html": "<span>1 / 4</span>",
+  "cls": "huge gold"
+ },
+ "v2_n2": {
+  "html": "<span>2 / 4</span>",
+  "cls": "huge gold"
+ },
+ "v2_n3": {
+  "html": "<span>3 / 4</span>",
+  "cls": "huge gold"
+ },
+ "v2_n4": {
+  "html": "<span>4 / 4</span>",
+  "cls": "huge gold"
+ },
+ "v2_end": {
+  "html": "<span>YOUR TURN.</span>",
+  "cls": "big gold"
+ },
+ "v3_hook": {
+  "html": "<span>EASY MATH,</span><span class='g'>THEY SAID.</span>",
+  "cls": "big"
+ },
+ "v3_q": {
+  "html": "<span>YOU HAVE <span class='g'>3 SECONDS.</span></span>"
+ },
+ "v3_a1": {
+  "html": "<span class='r'>IT WAS 10.</span>",
+  "cls": "big red"
+ },
+ "v3_a2": {
+  "html": "<span class='r'>IT WAS 14.</span>",
+  "cls": "big red"
+ },
+ "v3_q3": {
+  "html": "<span>3 − 3. <span class='g'>COME ON.</span></span>"
+ },
+ "v3_a3": {
+  "html": "<span class='r'>GAME OVER.</span>",
+  "cls": "big red"
+ },
+ "v3_end": {
+  "html": "<span>BET YOU GOT <span class='g'>ALL 3.</span></span>"
+ },
+ "v4_hook": {
+  "html": "<span>LEVEL 1 TO <span class='g'>LEVEL 8</span></span><span class='sub'>one run, three lives</span>",
+  "cls": "big"
+ },
+ "v4_mid": {
+  "html": "<span>IT GETS <span class='g'>HARDER.</span></span>"
+ },
+ "v4_last": {
+  "html": "<span><span class='r'>1 LIFE</span> LEFT...</span>",
+  "cls": "red"
+ },
+ "v4_end": {
+  "html": "<span>HOW FAR CAN <span class='g'>YOU</span> GET?</span>"
+ },
+ "v5_hook": {
+  "html": "<span>MEMORY TEST.</span><span class='g'>3 ROUNDS.</span>",
+  "cls": "big"
+ },
+ "v5_r1": {
+  "html": "<span>MEMORISE <span class='g'>THE STARS.</span></span>"
+ },
+ "v5_q1": {
+  "html": "<span>WHERE WERE <span class='g'>THEY?</span></span>"
+ },
+ "v5_r2": {
+  "html": "<span>COUNT <span class='g'>THE SHAPES.</span></span>"
+ },
+ "v5_q2": {
+  "html": "<span>HOW <span class='g'>MANY?</span></span>"
+ },
+ "v5_r3": {
+  "html": "<span>REMEMBER <span class='g'>THIS COLOUR.</span></span>"
+ },
+ "v5_q3": {
+  "html": "<span>WHICH ONE <span class='g'>WAS IT?</span></span>"
+ },
+ "v5_end": {
+  "html": "<span>SCORE OUT OF 3?</span><span class='g'>COMMENT IT.</span>",
+  "cls": "big"
+ },
+ "v6_hook": {
+  "html": "<span>3 LEVELS THAT</span><span>TEST <span class='g'>YOUR PATIENCE.</span></span>",
+  "cls": "big"
+ },
+ "v6_wait": {
+  "html": "<span>DON'T TAP YET...</span>"
+ },
+ "v6_now": {
+  "html": "<span class='g'>NOW!</span>",
+  "cls": "huge gold"
+ },
+ "v6_hands": {
+  "html": "<span>DON'T. TOUCH. <span class='r'>ANYTHING.</span></span>"
+ },
+ "v6_hold": {
+  "html": "<span>JUST. HOLD. <span class='g'>STILL.</span></span>"
+ },
+ "v6_nope": {
+  "html": "<span class='r'>...NOPE.</span>",
+  "cls": "big red"
+ },
+ "v7_hook": {
+  "html": "<span>FIND THE COLOUR</span><span class='g'>IN 1 SECOND.</span>",
+  "cls": "big"
+ },
+ "v7_n1": {
+  "html": "<span>1 / 5</span>",
+  "cls": "huge gold"
+ },
+ "v7_n2": {
+  "html": "<span>2 / 5</span>",
+  "cls": "huge gold"
+ },
+ "v7_n3": {
+  "html": "<span>3 / 5</span>",
+  "cls": "huge gold"
+ },
+ "v7_n4": {
+  "html": "<span>4 / 5</span>",
+  "cls": "huge gold"
+ },
+ "v7_n5": {
+  "html": "<span>5 / 5</span>",
+  "cls": "huge gold"
+ },
+ "v7_fail": {
+  "html": "<span class='r'>WRONG. COLOUR.</span>",
+  "cls": "big red"
+ },
+ "v7_end": {
+  "html": "<span>HOW MANY DID <span class='g'>YOU</span> GET?</span>"
+ },
+ "v8_hook": {
+  "html": "<span>WHICH ONE ARE</span><span>YOU <span class='g'>WORST AT?</span></span>",
+  "cls": "big"
+ },
+ "v8_k1": {
+  "html": "<span><span class='g'>1.</span> TAP</span>",
+  "cls": "big"
+ },
+ "v8_k2": {
+  "html": "<span><span class='g'>2.</span> MEMORY</span>",
+  "cls": "big"
+ },
+ "v8_k3": {
+  "html": "<span><span class='g'>3.</span> MOTION</span>",
+  "cls": "big"
+ },
+ "v8_k4": {
+  "html": "<span><span class='g'>4.</span> PRECISION</span>",
+  "cls": "big"
+ },
+ "v8_k5": {
+  "html": "<span><span class='g'>5.</span> PUZZLE</span>",
+  "cls": "big"
+ },
+ "v8_end": {
+  "html": "<span>COMMENT YOUR <span class='g'>NUMBER.</span></span>"
+ },
+ "v9_hook": {
+  "html": "<span><span class='r'>1 LIFE</span> LEFT</span><span>ON LEVEL 2.</span><span class='g'>HOW FAR CAN I GET?</span>",
+  "cls": "big"
+ },
+ "v9_alive": {
+  "html": "<span>STILL <span class='g'>ALIVE.</span></span>"
+ },
+ "v9_calm": {
+  "html": "<span>DON'T. <span class='g'>PANIC.</span></span>"
+ },
+ "v9_more": {
+  "html": "<span class='g'>ONE MORE LEVEL...</span>",
+  "cls": "big gold"
+ },
+ "v9_close": {
+  "html": "<span class='r'>SO CLOSE.</span>",
+  "cls": "big red"
+ },
+ "v9_end": {
+  "html": "<span>LEVEL 8 ON <span class='g'>ONE LIFE.</span></span>"
+ },
+ "v10_hook": {
+  "html": "<span>POV: IT'S 2AM</span><span>AND YOU SAID</span><span class='g'>“ONE MORE LEVEL”</span>",
+  "cls": "big"
+ },
+ "v10_mid": {
+  "html": "<span>JUST ONE <span class='g'>MORE...</span></span>"
+ },
+ "v10_last": {
+  "html": "<span>OK. <span class='g'>LAST ONE.</span></span>"
+ },
+ "v10_end": {
+  "html": "<span>...ONE <span class='g'>MORE.</span></span>",
+  "cls": "big"
+ }
+}

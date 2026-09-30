@@ -1,6 +1,8 @@
-frames*/
-cards/
 *.mp4
 *.wav
+cards/
+frames*/
+pills/
 search*.json
 sheet*.png
+shorts_out/

@@ -58,3 +58,21 @@ To change the copy, edit `CAPTIONS` / `endHtml` in `cards.mjs` and the schedule 
 - Determinism is very high but not perfect: physics-drag levels can occasionally drift. If a capture doesn't match its search result, re-run the capture or pick another seed.
 - Frames, cards and exported videos are build output and are git-ignored. Log each exported creative in `../../data/creative-data.csv` when it launches, not before.
 - The end card says "Play free on Android". Update it if that stops being accurate (e.g. adding iOS, or before the Play listing is public).
+
+## Shorts (15–20 s organic cuts)
+
+`shorts.py` is a general editor for short-form cuts; `recipes.py` holds one recipe per video. A recipe is a list of `Clip` (source frames, optional speed), `Hold` (freeze-frame), and `Flash` items, each with optional `Cap` captions and game sound cues. The engine appends a 2.4 s end card, rebuilds audio from each run's logged sound effects plus a per-video music bed, and loudness-normalises to −14 LUFS.
+
+Batch 1 (10 videos) uses six captured runs: seeds 10, 16, 20, 80, 109, 151. Captions live in `shorts_pills.json` (rendered by `pills.mjs`); platform copy for each video is in `shorts_captions.json` and [`../captions/shorts-batch-1.md`](../captions/shorts-batch-1.md).
+
+```sh
+for s in 10 16 20 80 109 151; do node record.mjs capture --seed $s --out frames$s --max 70; done
+node cards.mjs                              # end-card layers
+node pills.mjs shorts_pills.json pills/     # captions
+python3 make_shorts.py                      # all recipes -> shorts_out/
+python3 make_shorts.py 03-easy-math         # or just one
+```
+
+Recipes reference exact frame numbers in those captures. A re-capture normally reproduces the same run, but seed 80's capture didn't match its search result, so check the printed `maxLevel`/`wins` (seed 80: level 2, 1 win) and update frame numbers in `recipes.py` if a run changes.
+
+Colour-match intro cards are cut on purpose: `color_match` re-deals its board when play starts (`enter: deal` in `src/challenges/tap.ts`), so the preview shown behind the intro card names a different colour than the real prompt.
