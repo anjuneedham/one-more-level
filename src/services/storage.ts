@@ -12,6 +12,8 @@ export interface SaveData {
   hapticEnabled: boolean;
   runs: number;
   lastPlayed: number;
+  /** Challenge IDs this player has seen at least once. */
+  discovered: string[];
 }
 
 const KEY = 'oml.save.v1';
@@ -24,6 +26,7 @@ const DEFAULTS: SaveData = {
   hapticEnabled: true,
   runs: 0,
   lastPlayed: 0,
+  discovered: [],
 };
 
 function read(): SaveData {
@@ -38,6 +41,7 @@ function read(): SaveData {
       bestLevel: Math.max(0, Number(parsed.bestLevel) || 0),
       bestScore: Math.max(0, Number(parsed.bestScore) || 0),
       coins: Math.max(0, Number(parsed.coins) || 0),
+      discovered: Array.isArray(parsed.discovered) ? parsed.discovered.filter((d) => typeof d === 'string') : [],
     };
   } catch {
     return { ...DEFAULTS };
@@ -59,6 +63,13 @@ class SaveStore {
 
   addCoins(amount: number): number {
     return this.update({ coins: this.data.coins + Math.max(0, Math.round(amount)) }).coins;
+  }
+
+  /** Marks a challenge as seen; true the first time. */
+  discover(id: string): boolean {
+    if (this.data.discovered.includes(id)) return false;
+    this.update({ discovered: [...this.data.discovered, id] });
+    return true;
   }
 
   /**

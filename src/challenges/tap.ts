@@ -168,7 +168,11 @@ export const colorMatch: ChallengeDef = {
 
     return {
       timeLimit: scaleTime(params, 5, 3.4, 2.5) * rounds,
-      enter: deal,
+      // The board dealt at create() is already on screen behind the intro
+      // card; keep it, just restore the instruction the controller replaced.
+      enter() {
+        host.setInstruction(`Tap ${wanted.name}`);
+      },
       update(dt) {
         pop = Math.max(0, pop - dt * 6);
       },

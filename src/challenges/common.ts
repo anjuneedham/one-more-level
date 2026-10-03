@@ -121,6 +121,35 @@ export function gridLayout(
   return { boxes, cols, rows };
 }
 
+/**
+ * Relative drag: the piece moves by the finger's delta instead of jumping to
+ * where the finger lands, so a level can't be won by tapping on the goal.
+ */
+export function relativeDrag(
+  piece: { x: number; y: number },
+  radius: number,
+  bounds: { width: number; height: number },
+): { down(p: Pointer): void; move(p: Pointer): void; up(): void; readonly active: boolean } {
+  let last: { x: number; y: number } | null = null;
+  return {
+    get active() {
+      return last !== null;
+    },
+    down(p) {
+      last = { x: p.x, y: p.y };
+    },
+    move(p) {
+      if (!last) return;
+      piece.x = clamp(piece.x + p.x - last.x, radius, bounds.width - radius);
+      piece.y = clamp(piece.y + p.y - last.y, radius, bounds.height - radius);
+      last = { x: p.x, y: p.y };
+    },
+    up() {
+      last = null;
+    },
+  };
+}
+
 /** Playfield inset used by most challenges so nothing hugs the screen edge. */
 export function safeArea(width: number, height: number, pad = 20): Box {
   return { x: pad, y: pad, w: width - pad * 2, h: height - pad * 2 };

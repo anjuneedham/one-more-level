@@ -19,7 +19,7 @@ export type ChallengeTag =
   | 'timing';
 
 /**
- * Parameters handed to every challenge. Tuning these turns 25 mechanics into
+ * Parameters handed to every challenge. Tuning these turns 50 mechanics into
  * hundreds of distinct playable variations.
  */
 export interface ChallengeParams {

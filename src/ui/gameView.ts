@@ -68,8 +68,9 @@ export class GameView {
     ]);
   }
 
-  setLevel(level: number): void {
+  setLevel(level: number, band?: string): void {
     this.levelEl.textContent = String(level);
+    if (band) this.root.dataset.band = band;
     replayAnimation(this.levelEl, 'pop');
   }
 
@@ -107,12 +108,27 @@ export class GameView {
   }
 
   /** Big "LEVEL N / TITLE / instruction" card. Resolves when it is gone. */
-  showIntro(level: number, title: string, instruction: string, duration = 950): Promise<void> {
-    const card = h('div', { class: 'card card--intro' }, [
+  showIntro(
+    level: number,
+    title: string,
+    instruction: string,
+    opts: { family?: { name: string; color: string }; isNew?: boolean } = {},
+    duration = opts.isNew ? 1300 : 950,
+  ): Promise<void> {
+    const tags = h('div', { class: 'card__tags' });
+    if (opts.family) {
+      const chip = h('span', { class: 'tag', text: opts.family.name });
+      chip.style.setProperty('--tag', opts.family.color);
+      tags.append(chip);
+    }
+    if (opts.isNew) tags.append(h('span', { class: 'tag tag--new', text: 'NEW' }));
+    const card = h('div', { class: `card card--intro${opts.isNew ? ' is-new' : ''}` }, [
       h('div', { class: 'card__eyebrow', text: `LEVEL ${level}` }),
       h('div', { class: 'card__title', text: title }),
       h('div', { class: 'card__sub', text: instruction }),
+      tags,
     ]);
+    if (opts.family) card.style.setProperty('--family', opts.family.color);
     this.overlay.replaceChildren(card);
     this.overlay.classList.add('is-visible');
     return new Promise((resolve) => {

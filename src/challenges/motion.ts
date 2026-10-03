@@ -2,7 +2,7 @@ import { circle, clamp, dist, fillRoundRect, glow, meter, ring, text, withAlpha 
 import { THEME } from '../core/theme';
 import { scale, scaleInt, scaleTime } from '../game/difficulty';
 import type { Challenge, ChallengeDef } from '../game/types';
-import { drawTarget, hitDisc, safeArea, type Disc } from './common';
+import { drawTarget, hitDisc, relativeDrag, safeArea, type Disc } from './common';
 
 /** 5. DODGE - slide left and right, let nothing hit you. */
 export const dodge: ChallengeDef = {
@@ -271,7 +271,7 @@ export const escape: ChallengeDef = {
         vx: params.rng.sign() * scale(params, 55, 190),
       };
     });
-    let dragging = false;
+    const drag = relativeDrag(player, playerR, host);
 
     return {
       timeLimit: scaleTime(params, 9, 7, 5),
@@ -302,7 +302,7 @@ export const escape: ChallengeDef = {
           host.particles.burst(exit.x, exit.y, THEME.success, 20);
           host.win();
         }
-        if (dragging) host.particles.trail(player.x, player.y, THEME.primary, 1);
+        if (drag.active) host.particles.trail(player.x, player.y, THEME.primary, 1);
       },
       render(g) {
         glow(g, exit.x, exit.y, exit.r * 2, THEME.success, 0.32);
@@ -318,17 +318,13 @@ export const escape: ChallengeDef = {
         circle(g, player.x, player.y, playerR, THEME.primary);
       },
       onDown(p) {
-        dragging = true;
-        player.x = clamp(p.x, playerR, host.width - playerR);
-        player.y = clamp(p.y, playerR, host.height - playerR);
+        drag.down(p);
       },
       onMove(p) {
-        if (!dragging) return;
-        player.x = clamp(p.x, playerR, host.width - playerR);
-        player.y = clamp(p.y, playerR, host.height - playerR);
+        drag.move(p);
       },
       onUp() {
-        dragging = false;
+        drag.up();
       },
     } satisfies Challenge;
   },
@@ -360,6 +356,7 @@ export const avoid: ChallengeDef = {
     });
     const collectNeeded = scaleInt(params, 1, 3);
     let collected = 0;
+    const drag = relativeDrag(player, playerR, host);
     const gold = {
       x: params.rng.range(60, host.width - 60),
       y: params.rng.range(60, host.height * 0.5),
@@ -418,12 +415,13 @@ export const avoid: ChallengeDef = {
         ring(g, player.x, player.y, playerR + 5, withAlpha(THEME.primary, 0.35), 2);
       },
       onDown(p) {
-        player.x = clamp(p.x, playerR, host.width - playerR);
-        player.y = clamp(p.y, playerR, host.height - playerR);
+        drag.down(p);
       },
       onMove(p) {
-        player.x = clamp(p.x, playerR, host.width - playerR);
-        player.y = clamp(p.y, playerR, host.height - playerR);
+        drag.move(p);
+      },
+      onUp() {
+        drag.up();
       },
     } satisfies Challenge;
   },

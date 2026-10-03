@@ -9,7 +9,9 @@ import { BALANCE } from '../services/config';
 import { Haptics } from '../services/haptics';
 import type { GameView } from '../ui/gameView';
 import { ChallengeManager } from './challengeManager';
-import { paramsForLevel } from './difficulty';
+import { bandForLevel, paramsForLevel } from './difficulty';
+import { familyOf } from './registry';
+import { Save } from '../services/storage';
 import { GameSession, type RunSummary } from './session';
 import type { Challenge, ChallengeDef, ChallengeHost, ChallengeParams } from './types';
 
@@ -157,7 +159,7 @@ export class PlayController {
     this.failReason = '';
     this.lastTickSecond = -1;
 
-    this.view.setLevel(level);
+    this.view.setLevel(level, bandForLevel(level));
     this.view.setInstruction(def.instruction);
     this.view.setProgress(0);
     this.view.setTimer(1, !this.round.hideTimer);
@@ -166,7 +168,10 @@ export class PlayController {
     // Intro card: the challenge is already on screen behind it, frozen.
     this.phase = 'intro';
     this.stage.setHandlers(null);
-    const introResult = await this.race(this.view.showIntro(level, def.title, def.instruction));
+    const isNew = Save.discover(def.id);
+    const introResult = await this.race(
+      this.view.showIntro(level, def.title, def.instruction, { family: familyOf(def.id), isNew }),
+    );
     if (introResult === 'abort' || this.aborted) return 'abort';
 
     Analytics.track('challenge_started', { challenge: def.id, level, band: params.band });
@@ -263,7 +268,7 @@ export class PlayController {
     this.view.setLives(this.session.lives, BALANCE.startingLives);
     this.view.setScore(this.session.score);
     this.view.setCoins(this.session.coinsEarned);
-    this.view.setLevel(this.session.level);
+    this.view.setLevel(this.session.level, bandForLevel(this.session.level));
   }
 
   /** Single render/update frame. Kept allocation-free for steady frame times. */
