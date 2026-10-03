@@ -45,6 +45,11 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="${admobAppId}" />
+
+        <!-- Play Games Services project ID, from PLAY_GAMES_APP_ID at build time. -->
+        <meta-data
+            android:name="com.google.android.gms.games.APP_ID"
+            android:value="@string/game_services_project_id" />
     </application>
 
     <!-- Permissions -->

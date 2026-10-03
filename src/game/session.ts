@@ -17,6 +17,8 @@ export interface RunSummary {
   newBestLevel: boolean;
   newBestScore: boolean;
   durationSec: number;
+  /** Start time of the run; stays the same across a rewarded continue. */
+  startedAt: number;
 }
 
 /** State of a single run: level, lives, score and the coins earned so far. */
@@ -76,6 +78,7 @@ export class GameSession {
       newBestLevel: records.newBestLevel,
       newBestScore: records.newBestScore,
       durationSec: Math.round((Date.now() - this.startedAt) / 1000),
+      startedAt: this.startedAt,
     };
   }
 }

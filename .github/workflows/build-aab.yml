@@ -27,6 +27,8 @@ jobs:
           VITE_ADMOB_APP_ID: ${{ secrets.ADMOB_APP_ID }}
           VITE_ADMOB_REWARDED_ID: ${{ secrets.ADMOB_REWARDED_ID }}
           VITE_ADMOB_INTERSTITIAL_ID: ${{ secrets.ADMOB_INTERSTITIAL_ID }}
+          VITE_PLAY_GAMES_LEADERBOARD_LEVEL: ${{ secrets.PLAY_GAMES_LEADERBOARD_LEVEL }}
+          VITE_PLAY_GAMES_LEADERBOARD_SCORE: ${{ secrets.PLAY_GAMES_LEADERBOARD_SCORE }}
         run: npm run build
 
       - name: Copy the web build into the Android project
@@ -70,6 +72,7 @@ jobs:
         working-directory: android
         env:
           ADMOB_APP_ID: ${{ secrets.ADMOB_APP_ID }}
+          PLAY_GAMES_APP_ID: ${{ secrets.PLAY_GAMES_APP_ID }}
         run: ./gradlew bundleRelease --no-daemon
 
       - name: Clean up the signing key from the runner

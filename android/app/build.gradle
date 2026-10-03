@@ -15,8 +15,8 @@ android {
         applicationId "com.onemorelevel.myapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 3
-        versionName "0.1.0"
+        versionCode 4
+        versionName "0.2.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         // Read from the environment at build time, never committed. Falls
         // back to Google's public test App ID so a build without the
@@ -24,6 +24,9 @@ android {
         manifestPlaceholders = [
             admobAppId: (System.getenv("ADMOB_APP_ID") ?: "ca-app-pub-3940256099942544~3347511713")
         ]
+        // Play Games Services project ID (numeric, from Play Console > Play Games
+        // Services > Setup). Empty means leaderboards stay off; the game still runs.
+        resValue "string", "game_services_project_id", (System.getenv("PLAY_GAMES_APP_ID") ?: "")
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
              // Default: https://android.googlesource.com/platform/frameworks/base/+/282e181b58cf72b6ca770dc7ca5f91f135444502/tools/aapt/AaptAssets.cpp#61
@@ -76,6 +79,7 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
     implementation project(':capacitor-cordova-android-plugins')
+    implementation "com.google.android.gms:play-services-games-v2:20.1.2"
 }
 
 apply from: 'capacitor.build.gradle'

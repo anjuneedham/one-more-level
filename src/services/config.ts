@@ -26,6 +26,8 @@ export interface AppConfig {
     /** 'console' logs locally, 'firebase' uses the native Firebase bridge. */
     provider: 'console' | 'firebase' | 'none';
   };
+  /** Play Games leaderboard IDs (Play Console > Play Games Services > Leaderboards). */
+  leaderboards: { level: string; score: string };
   debug: boolean;
 }
 
@@ -50,7 +52,7 @@ const hasProductionAdIds =
 
 export const CONFIG: AppConfig = {
   env,
-  version: '0.1.0',
+  version: '0.2.0',
   ads: {
     provider: hasProductionAdIds ? 'admob' : 'mock',
     appId: fromEnv('VITE_ADMOB_APP_ID') ?? GOOGLE_TEST_APP_ID,
@@ -60,6 +62,10 @@ export const CONFIG: AppConfig = {
   },
   analytics: {
     provider: isProduction ? 'firebase' : 'console',
+  },
+  leaderboards: {
+    level: fromEnv('VITE_PLAY_GAMES_LEADERBOARD_LEVEL') ?? '',
+    score: fromEnv('VITE_PLAY_GAMES_LEADERBOARD_SCORE') ?? '',
   },
   debug: !isProduction,
 };

@@ -88,6 +88,57 @@ they show up, but repeated self-clicks for "revenue" is invalid traffic and
 against AdMob policy. Use `AdMobInitializationOptions.testingDevices` (in
 `AdMobAdService.initialize`) if you want to hammer on it safely during QA.
 
+## Leaderboards (Google Play Games Services)
+
+Sign-in is optional: everyone plays as a guest, and guests see their own
+best runs on the device. Players who sign in with Google Play Games post to two
+global leaderboards, and their **Play Games gamer name is their unique
+username**. Google guarantees that it is unique, the player picks it in the
+Play Games app, and it follows their Google account to any phone. Play Games
+does not allow a game to set or show a custom name of its own.
+
+The bridge is a small local Capacitor plugin,
+`android/app/src/main/java/com/onemorelevel/myapp/PlayGamesPlugin.java`
+(registered in `MainActivity`), used by `src/services/leaderboard.ts`. Until
+it is configured it reports "not available" and the game behaves exactly as
+before.
+
+One-time setup in Play Console:
+
+1. **Grow users → Play Games Services → Setup and management → Configuration**:
+   create a Play Games Services project for this app. Copy the numeric
+   **project ID** shown there.
+2. **Credentials → Add credential → Android**. Create the OAuth client it asks
+   for in Google Cloud, using package `com.onemorelevel.myapp` and the
+   **SHA-1 of the app signing key**
+   (Play Console → Setup → App integrity → App signing). Add a second Android
+   credential with the **upload key** SHA-1 too, so sideloaded/internal builds
+   can sign in.
+3. **Leaderboards → Add leaderboard**, twice:
+   - `Best Level`: format Numeric, 0 decimal places, ordering *Larger is better*.
+   - `High Score`: same settings.
+
+   Copy each leaderboard ID (they look like `CgkI...`).
+4. **Testers**: add your testers' Google accounts. Until the Play Games
+   configuration is **published** (Review and publish on the same page),
+   only these accounts can sign in.
+5. Add three repository secrets
+   (**Settings → Secrets and variables → Actions**):
+
+| Secret | Used by |
+| --- | --- |
+| `PLAY_GAMES_APP_ID` | Gradle `resValue` `game_services_project_id` → manifest `com.google.android.gms.games.APP_ID` |
+| `PLAY_GAMES_LEADERBOARD_LEVEL` | `VITE_PLAY_GAMES_LEADERBOARD_LEVEL` |
+| `PLAY_GAMES_LEADERBOARD_SCORE` | `VITE_PLAY_GAMES_LEADERBOARD_SCORE` |
+
+The leaderboard screen and Play Games sign-in appear only when all three are
+set. **Update the Play Console Data safety form when this ships**: with
+Play Games on, the app handles a *User ID* (the Play Games player ID) and
+*App activity* (game scores). Declare both as optional and used for app
+functionality, and check Google's current Play Games Services Data safety
+guidance when you fill it in. `docs/privacy.html`
+already describes this.
+
 ## Analytics (Firebase, optional)
 
 Add `google-services.json` to `android/app/` (git-ignored) and a Firebase
@@ -121,7 +172,7 @@ always agree.
 - [ ] `npm run build` clean, `npx cap sync android` run
 - [ ] Version code/name bumped
 - [ ] Release keystore configured, AAB signed
-- [ ] Data safety form: local storage only; ads/analytics declared if enabled
+- [ ] Data safety form: local storage only; ads/analytics declared if enabled; Play Games (user ID, scores) declared once its secrets are set
 - [ ] GitHub Pages enabled (Settings -> Pages -> Deploy from branch `main`,
       folder `/docs`) so the privacy and terms pages are live
 - [ ] Privacy policy URL entered in Play Console -> App content

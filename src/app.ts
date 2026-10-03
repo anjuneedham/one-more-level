@@ -5,10 +5,11 @@ import { Analytics } from './services/analytics';
 import { Ads } from './services/ads';
 import { Audio } from './services/audio';
 import { Haptics } from './services/haptics';
+import { Leaderboard } from './services/leaderboard';
 import { GameView } from './ui/gameView';
-import { GameOverScreen, HomeScreen, SettingsScreen, type GameOverAction } from './ui/screens';
+import { GameOverScreen, HomeScreen, LeaderboardScreen, SettingsScreen, type GameOverAction } from './ui/screens';
 
-type ScreenName = 'home' | 'game' | 'settings' | 'gameover';
+type ScreenName = 'home' | 'game' | 'settings' | 'gameover' | 'leaderboard';
 
 /** Top-level navigation and the glue between screens, stage and services. */
 export class App {
@@ -16,22 +17,28 @@ export class App {
   private readonly gameView: GameView;
   private readonly home: HomeScreen;
   private readonly settings: SettingsScreen;
+  private readonly leaderboard: LeaderboardScreen;
   private readonly gameOver: GameOverScreen;
   private readonly controller: PlayController;
   private readonly screens: Record<ScreenName, HTMLElement>;
   private current: ScreenName = 'home';
+  /** Where the leaderboard's back button returns to. */
+  private leaderboardReturn: ScreenName = 'home';
   private lastSummary: RunSummary | null = null;
 
   constructor(private readonly root: HTMLElement) {
     this.home = new HomeScreen(
       () => this.startRun(),
       () => this.show('settings'),
+      () => this.openLeaderboard('home'),
+      () => void this.handleProfile(),
     );
     this.settings = new SettingsScreen(() => this.show('home'));
+    this.leaderboard = new LeaderboardScreen(() => this.show(this.leaderboardReturn));
     this.gameOver = new GameOverScreen((action) => void this.handleGameOverAction(action));
     this.gameView = new GameView(() => this.quitRun());
 
-    this.root.append(this.home.root, this.gameView.root, this.settings.root, this.gameOver.root);
+    this.root.append(this.home.root, this.gameView.root, this.settings.root, this.gameOver.root, this.leaderboard.root);
     this.stage = new Stage(this.gameView.playfield);
     this.controller = new PlayController(this.gameView, this.stage, {
       onGameOver: (summary) => void this.handleGameOver(summary),
@@ -42,14 +49,29 @@ export class App {
       game: this.gameView.root,
       settings: this.settings.root,
       gameover: this.gameOver.root,
+      leaderboard: this.leaderboard.root,
     };
+
+    Leaderboard.onChange((account) => {
+      this.home.setAccount(account);
+      this.settings.setAccount(account);
+      if (this.current === 'leaderboard') void this.leaderboard.render();
+    });
+    this.home.setAccount(Leaderboard.current);
+    this.settings.setAccount(Leaderboard.current);
+    // Play Games signs returning players in silently; pick that up.
+    void Leaderboard.refresh();
 
     this.home.refresh();
     this.show('home');
 
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) this.controller.pause();
-      else if (this.current === 'game') this.controller.resume();
+      else {
+        if (this.current === 'game') this.controller.resume();
+        // The player may have signed in or out in the Play Games app.
+        else void Leaderboard.refresh();
+      }
     });
   }
 
@@ -59,6 +81,23 @@ export class App {
       el.classList.toggle('is-active', key === name);
     }
     if (name === 'home') this.home.refresh();
+  }
+
+  private openLeaderboard(from: ScreenName): void {
+    this.leaderboardReturn = from;
+    this.show('leaderboard');
+    void this.leaderboard.open();
+  }
+
+  /** Profile chip: sign in when possible, otherwise show the boards. */
+  private async handleProfile(): Promise<void> {
+    const account = Leaderboard.current;
+    if (account.available && !account.signedIn) {
+      const result = await Leaderboard.signIn();
+      Analytics.track('settings_changed', { setting: 'play_games_sign_in', value: result.signedIn });
+      return;
+    }
+    this.openLeaderboard('home');
   }
 
   private startRun(): void {
@@ -71,7 +110,8 @@ export class App {
   private quitRun(): void {
     this.controller.stop();
     // Quitting still counts: records and coins earned so far are kept.
-    this.controller.currentSession.finish();
+    const summary = this.controller.currentSession.finish();
+    void Leaderboard.submit(summary);
     this.show('home');
   }
 
@@ -84,11 +124,17 @@ export class App {
     this.gameOver.show(summary, canContinue);
     this.gameOver.setContinueEnabled(true);
     this.show('gameover');
+    await Leaderboard.submit(summary);
+    this.gameOver.showRank(summary, Leaderboard.current);
   }
 
   private async handleGameOverAction(action: GameOverAction): Promise<void> {
     if (action === 'home') {
       this.show('home');
+      return;
+    }
+    if (action === 'leaderboard') {
+      this.openLeaderboard('gameover');
       return;
     }
     if (action === 'retry') {

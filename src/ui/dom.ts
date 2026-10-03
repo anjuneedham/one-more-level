@@ -26,11 +26,13 @@ export function h<K extends keyof HTMLElementTagNameMap>(
 export function button(
   label: string,
   onClick: () => void,
-  opts: { variant?: 'primary' | 'ghost' | 'accent' | 'danger'; icon?: string; class?: string } = {},
+  opts: { variant?: 'primary' | 'ghost' | 'accent' | 'danger'; icon?: string; class?: string; label?: string } = {},
 ): HTMLButtonElement {
   const el = h('button', {
     class: `btn btn--${opts.variant ?? 'primary'} ${opts.class ?? ''}`.trim(),
     type: 'button',
+    // Accessible name for icon-only buttons.
+    'aria-label': opts.label,
   });
   if (opts.icon) el.append(h('span', { class: 'btn__icon', text: opts.icon }));
   el.append(h('span', { class: 'btn__label', text: label }));
